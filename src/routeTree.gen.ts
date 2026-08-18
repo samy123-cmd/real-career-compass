@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SalaryExplorerRouteImport } from './routes/salary-explorer'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SalaryExplorerRoute = SalaryExplorerRouteImport.update({
+  id: '/salary-explorer',
+  path: '/salary-explorer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/salary-explorer': typeof SalaryExplorerRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/salary-explorer': typeof SalaryExplorerRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/salary-explorer': typeof SalaryExplorerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/salary-explorer'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/salary-explorer'
+  id: '__root__' | '/' | '/salary-explorer'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SalaryExplorerRoute: typeof SalaryExplorerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/salary-explorer': {
+      id: '/salary-explorer'
+      path: '/salary-explorer'
+      fullPath: '/salary-explorer'
+      preLoaderRoute: typeof SalaryExplorerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SalaryExplorerRoute: SalaryExplorerRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
