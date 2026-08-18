@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CtcDecoderRouteImport } from './routes/ctc-decoder'
+import { Route as LayoffRadarRouteImport } from './routes/layoff-radar'
 import { Route as SalaryExplorerRouteImport } from './routes/salary-explorer'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const CtcDecoderRoute = CtcDecoderRouteImport.update({
   path: '/ctc-decoder',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LayoffRadarRoute = LayoffRadarRouteImport.update({
+  id: '/layoff-radar',
+  path: '/layoff-radar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SalaryExplorerRoute = SalaryExplorerRouteImport.update({
   id: '/salary-explorer',
   path: '/salary-explorer',
@@ -32,30 +38,34 @@ const SalaryExplorerRoute = SalaryExplorerRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ctc-decoder': typeof CtcDecoderRoute
+  '/layoff-radar': typeof LayoffRadarRoute
   '/salary-explorer': typeof SalaryExplorerRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ctc-decoder': typeof CtcDecoderRoute
+  '/layoff-radar': typeof LayoffRadarRoute
   '/salary-explorer': typeof SalaryExplorerRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ctc-decoder': typeof CtcDecoderRoute
+  '/layoff-radar': typeof LayoffRadarRoute
   '/salary-explorer': typeof SalaryExplorerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ctc-decoder' | '/salary-explorer'
+  fullPaths: '/' | '/ctc-decoder' | '/layoff-radar' | '/salary-explorer'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ctc-decoder' | '/salary-explorer'
-  id: '__root__' | '/' | '/ctc-decoder' | '/salary-explorer'
+  to: '/' | '/ctc-decoder' | '/layoff-radar' | '/salary-explorer'
+  id: '__root__' | '/' | '/ctc-decoder' | '/layoff-radar' | '/salary-explorer'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CtcDecoderRoute: typeof CtcDecoderRoute
+  LayoffRadarRoute: typeof LayoffRadarRoute
   SalaryExplorerRoute: typeof SalaryExplorerRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CtcDecoderRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/layoff-radar': {
+      id: '/layoff-radar'
+      path: '/layoff-radar'
+      fullPath: '/layoff-radar'
+      preLoaderRoute: typeof LayoffRadarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/salary-explorer': {
       id: '/salary-explorer'
       path: '/salary-explorer'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CtcDecoderRoute: CtcDecoderRoute,
+  LayoffRadarRoute: LayoffRadarRoute,
   SalaryExplorerRoute: SalaryExplorerRoute,
 }
 export const routeTree = rootRouteImport
