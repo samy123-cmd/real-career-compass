@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CtcDecoderRouteImport } from './routes/ctc-decoder'
 import { Route as LayoffRadarRouteImport } from './routes/layoff-radar'
 import { Route as SalaryExplorerRouteImport } from './routes/salary-explorer'
+import { Route as AnalysisSlugRouteImport } from './routes/analysis.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const SalaryExplorerRoute = SalaryExplorerRouteImport.update({
   path: '/salary-explorer',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AnalysisSlugRoute = AnalysisSlugRouteImport.update({
+  id: '/analysis/$slug',
+  path: '/analysis/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ctc-decoder': typeof CtcDecoderRoute
   '/layoff-radar': typeof LayoffRadarRoute
   '/salary-explorer': typeof SalaryExplorerRoute
+  '/analysis/$slug': typeof AnalysisSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ctc-decoder': typeof CtcDecoderRoute
   '/layoff-radar': typeof LayoffRadarRoute
   '/salary-explorer': typeof SalaryExplorerRoute
+  '/analysis/$slug': typeof AnalysisSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,30 @@ export interface FileRoutesById {
   '/ctc-decoder': typeof CtcDecoderRoute
   '/layoff-radar': typeof LayoffRadarRoute
   '/salary-explorer': typeof SalaryExplorerRoute
+  '/analysis/$slug': typeof AnalysisSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ctc-decoder' | '/layoff-radar' | '/salary-explorer'
+  fullPaths:
+    | '/'
+    | '/ctc-decoder'
+    | '/layoff-radar'
+    | '/salary-explorer'
+    | '/analysis/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ctc-decoder' | '/layoff-radar' | '/salary-explorer'
-  id: '__root__' | '/' | '/ctc-decoder' | '/layoff-radar' | '/salary-explorer'
+  to:
+    | '/'
+    | '/ctc-decoder'
+    | '/layoff-radar'
+    | '/salary-explorer'
+    | '/analysis/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/ctc-decoder'
+    | '/layoff-radar'
+    | '/salary-explorer'
+    | '/analysis/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +92,7 @@ export interface RootRouteChildren {
   CtcDecoderRoute: typeof CtcDecoderRoute
   LayoffRadarRoute: typeof LayoffRadarRoute
   SalaryExplorerRoute: typeof SalaryExplorerRoute
+  AnalysisSlugRoute: typeof AnalysisSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +125,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SalaryExplorerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/analysis/$slug': {
+      id: '/analysis/$slug'
+      path: '/analysis/$slug'
+      fullPath: '/analysis/$slug'
+      preLoaderRoute: typeof AnalysisSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +140,7 @@ const rootRouteChildren: RootRouteChildren = {
   CtcDecoderRoute: CtcDecoderRoute,
   LayoffRadarRoute: LayoffRadarRoute,
   SalaryExplorerRoute: SalaryExplorerRoute,
+  AnalysisSlugRoute: AnalysisSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
