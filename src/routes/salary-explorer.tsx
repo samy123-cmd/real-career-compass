@@ -19,7 +19,7 @@ export const Route = createFileRoute("/salary-explorer")({
       },
     ],
   }),
-  component: SalaryExplorer;
+  component: SalaryExplorer,
 });
 
 const filters = [
