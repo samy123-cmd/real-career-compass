@@ -67,6 +67,28 @@
   --rule: oklch(0.86 0.005 85);
 }
 
+.dark {
+  /* ink ground #101010 */
+  --background: oklch(0.168 0 0);
+  /* paper type */
+  --foreground: oklch(0.945 0.003 85);
+  --card: oklch(0.205 0.002 85);
+  --card-foreground: oklch(0.945 0.003 85);
+  --primary: oklch(0.945 0.003 85);
+  --primary-foreground: oklch(0.168 0 0);
+  --secondary: oklch(0.238 0.002 85);
+  --secondary-foreground: oklch(0.945 0.003 85);
+  --muted: oklch(0.238 0.002 85);
+  --muted-foreground: oklch(0.665 0.004 85);
+  /* signal accent lifted for contrast on ink */
+  --accent: oklch(0.655 0.155 33.5);
+  --accent-foreground: oklch(0.168 0 0);
+  --signal: oklch(0.655 0.155 33.5);
+  --positive: oklch(0.685 0.115 155);
+  --border: oklch(0.285 0.003 85);
+  --rule: oklch(0.345 0.004 85);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
