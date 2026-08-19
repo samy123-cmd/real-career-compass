@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { tickerRows } from "@/data/career-reality";
+import { ThemeToggle } from "@/components/site/ThemeToggle";
 
 const nav = [
   { to: "/", label: "Terminal" },
@@ -70,6 +71,7 @@ export function SiteNav() {
           <span className="num hidden text-[10px] text-muted-foreground uppercase lg:inline">
             Data v2.04.1 · Aug 2026
           </span>
+          <ThemeToggle />
           <Link
             to="/salary-explorer"
             className="border border-foreground bg-foreground px-3 py-1.5 text-[12px] font-medium text-primary-foreground transition-colors hover:bg-accent hover:border-accent"
