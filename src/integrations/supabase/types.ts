@@ -14,7 +14,141 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      posts: {
+        Row: {
+          author_id: string | null
+          author_name: string
+          body: string
+          category: string
+          created_at: string
+          id: string
+          is_published: boolean
+          key_figures: Json
+          methodology: string | null
+          published_at: string
+          slug: string
+          standfirst: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          author_name?: string
+          body: string
+          category?: string
+          created_at?: string
+          id?: string
+          is_published?: boolean
+          key_figures?: Json
+          methodology?: string | null
+          published_at?: string
+          slug: string
+          standfirst: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          author_name?: string
+          body?: string
+          category?: string
+          created_at?: string
+          id?: string
+          is_published?: boolean
+          key_figures?: Json
+          methodology?: string | null
+          published_at?: string
+          slug?: string
+          standfirst?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          city: string | null
+          created_at: string
+          display_name: string
+          headline: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string
+          display_name?: string
+          headline?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          city?: string | null
+          created_at?: string
+          display_name?: string
+          headline?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      salary_entries: {
+        Row: {
+          city: string
+          company: string | null
+          created_at: string
+          employer_tier: string
+          experience_years: number
+          fixed_lpa: number
+          id: string
+          is_public: boolean
+          level: string | null
+          note: string | null
+          notice_days: number
+          role_title: string
+          total_lpa: number
+          updated_at: string
+          user_id: string
+          variable_lpa: number
+        }
+        Insert: {
+          city: string
+          company?: string | null
+          created_at?: string
+          employer_tier?: string
+          experience_years?: number
+          fixed_lpa: number
+          id?: string
+          is_public?: boolean
+          level?: string | null
+          note?: string | null
+          notice_days?: number
+          role_title: string
+          total_lpa: number
+          updated_at?: string
+          user_id: string
+          variable_lpa?: number
+        }
+        Update: {
+          city?: string
+          company?: string | null
+          created_at?: string
+          employer_tier?: string
+          experience_years?: number
+          fixed_lpa?: number
+          id?: string
+          is_public?: boolean
+          level?: string | null
+          note?: string | null
+          notice_days?: number
+          role_title?: string
+          total_lpa?: number
+          updated_at?: string
+          user_id?: string
+          variable_lpa?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
