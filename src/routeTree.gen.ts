@@ -10,14 +10,28 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CtcDecoderRouteImport } from './routes/ctc-decoder'
 import { Route as LayoffRadarRouteImport } from './routes/layoff-radar'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SalaryExplorerRouteImport } from './routes/salary-explorer'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedSubmitRouteImport } from './routes/_authenticated/submit'
 import { Route as AnalysisSlugRouteImport } from './routes/analysis.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CtcDecoderRoute = CtcDecoderRouteImport.update({
@@ -30,10 +44,25 @@ const LayoffRadarRoute = LayoffRadarRouteImport.update({
   path: '/layoff-radar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SalaryExplorerRoute = SalaryExplorerRouteImport.update({
   id: '/salary-explorer',
   path: '/salary-explorer',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedSubmitRoute = AuthenticatedSubmitRouteImport.update({
+  id: '/submit',
+  path: '/submit',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AnalysisSlugRoute = AnalysisSlugRouteImport.update({
   id: '/analysis/$slug',
@@ -43,54 +72,83 @@ const AnalysisSlugRoute = AnalysisSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/ctc-decoder': typeof CtcDecoderRoute
   '/layoff-radar': typeof LayoffRadarRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/salary-explorer': typeof SalaryExplorerRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/submit': typeof AuthenticatedSubmitRoute
   '/analysis/$slug': typeof AnalysisSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/ctc-decoder': typeof CtcDecoderRoute
   '/layoff-radar': typeof LayoffRadarRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/salary-explorer': typeof SalaryExplorerRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/submit': typeof AuthenticatedSubmitRoute
   '/analysis/$slug': typeof AnalysisSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/ctc-decoder': typeof CtcDecoderRoute
   '/layoff-radar': typeof LayoffRadarRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/salary-explorer': typeof SalaryExplorerRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/submit': typeof AuthenticatedSubmitRoute
   '/analysis/$slug': typeof AnalysisSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/ctc-decoder'
     | '/layoff-radar'
+    | '/reset-password'
     | '/salary-explorer'
+    | '/dashboard'
+    | '/submit'
     | '/analysis/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/ctc-decoder'
     | '/layoff-radar'
+    | '/reset-password'
     | '/salary-explorer'
+    | '/dashboard'
+    | '/submit'
     | '/analysis/$slug'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/ctc-decoder'
     | '/layoff-radar'
+    | '/reset-password'
     | '/salary-explorer'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/submit'
     | '/analysis/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   CtcDecoderRoute: typeof CtcDecoderRoute
   LayoffRadarRoute: typeof LayoffRadarRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SalaryExplorerRoute: typeof SalaryExplorerRoute
   AnalysisSlugRoute: typeof AnalysisSlugRoute
 }
@@ -102,6 +160,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ctc-decoder': {
@@ -118,12 +190,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoffRadarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/salary-explorer': {
       id: '/salary-explorer'
       path: '/salary-explorer'
       fullPath: '/salary-explorer'
       preLoaderRoute: typeof SalaryExplorerRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/submit': {
+      id: '/_authenticated/submit'
+      path: '/submit'
+      fullPath: '/submit'
+      preLoaderRoute: typeof AuthenticatedSubmitRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/analysis/$slug': {
       id: '/analysis/$slug'
@@ -135,10 +228,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedSubmitRoute: typeof AuthenticatedSubmitRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedSubmitRoute: AuthenticatedSubmitRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   CtcDecoderRoute: CtcDecoderRoute,
   LayoffRadarRoute: LayoffRadarRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SalaryExplorerRoute: SalaryExplorerRoute,
   AnalysisSlugRoute: AnalysisSlugRoute,
 }
