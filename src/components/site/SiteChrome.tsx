@@ -1,12 +1,15 @@
+import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { tickerRows } from "@/data/career-reality";
 import { ThemeToggle } from "@/components/site/ThemeToggle";
+import { useAuth } from "@/hooks/useAuth";
 
 const nav = [
   { to: "/", label: "Terminal" },
   { to: "/salary-explorer", label: "Salary explorer" },
   { to: "/ctc-decoder", label: "CTC decoder" },
   { to: "/layoff-radar", label: "Layoff radar" },
+  { to: "/analysis", label: "Analysis" },
 ] as const;
 
 function TickerRun() {
@@ -30,7 +33,7 @@ function TickerRun() {
 
 export function SalaryTicker() {
   return (
-    <div className="flex h-7 items-center gap-4 overflow-hidden border-b border-rule bg-foreground px-4 text-primary-foreground">
+    <div className="flex h-7 items-center gap-3 overflow-hidden border-b border-rule bg-foreground px-4 text-primary-foreground">
       <span className="num shrink-0 text-[10px] tracking-[0.14em] text-accent uppercase">Live</span>
       <div className="relative flex-1 overflow-hidden">
         <div className="animate-ticker flex w-max">
@@ -43,15 +46,18 @@ export function SalaryTicker() {
 }
 
 export function SiteNav() {
+  const [open, setOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+
   return (
     <header className="sticky top-0 z-50 bg-background">
       <SalaryTicker />
       <div className="flex h-14 items-center justify-between border-b border-rule px-4 md:px-8">
         <div className="flex items-baseline gap-8">
-          <Link to="/" className="font-serif text-xl leading-none tracking-tight">
+          <Link to="/" className="font-serif text-lg leading-none tracking-tight md:text-xl">
             Career<span className="italic text-accent">Reality</span>
           </Link>
-          <nav className="hidden items-center gap-6 md:flex">
+          <nav className="hidden items-center gap-6 lg:flex">
             {nav.map((n) => (
               <Link
                 key={n.to}
@@ -67,27 +73,60 @@ export function SiteNav() {
             ))}
           </nav>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="num hidden text-[10px] text-muted-foreground uppercase lg:inline">
+        <div className="flex items-center gap-3 md:gap-4">
+          <span className="num hidden text-[10px] text-muted-foreground uppercase xl:inline">
             Data v2.04.1 · Aug 2026
           </span>
           <ThemeToggle />
           <Link
-            to="/salary-explorer"
-            className="border border-foreground bg-foreground px-3 py-1.5 text-[12px] font-medium text-primary-foreground transition-colors hover:bg-accent hover:border-accent"
+            to={isAuthenticated ? "/dashboard" : "/auth"}
+            className="num hidden border border-foreground bg-foreground px-3 py-1.5 text-[11px] tracking-[0.08em] text-primary-foreground uppercase transition-colors hover:border-accent hover:bg-accent sm:inline-block"
           >
-            Submit your salary
+            {isAuthenticated ? "Your ledger" : "Create account"}
           </Link>
+          <button
+            type="button"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="num border border-rule px-2.5 py-1.5 text-[10px] tracking-[0.12em] uppercase lg:hidden"
+          >
+            {open ? "Close" : "Menu"}
+          </button>
         </div>
       </div>
+
+      {open && (
+        <nav className="flex flex-col border-b border-rule bg-background lg:hidden">
+          {nav.map((n) => (
+            <Link
+              key={n.to}
+              to={n.to}
+              activeOptions={{ exact: n.to === "/" }}
+              onClick={() => setOpen(false)}
+              className="border-b border-border px-4 py-3.5 text-[15px]"
+              activeProps={{ className: "text-accent" }}
+            >
+              {n.label}
+            </Link>
+          ))}
+          <Link
+            to={isAuthenticated ? "/dashboard" : "/auth"}
+            onClick={() => setOpen(false)}
+            className="num bg-foreground px-4 py-4 text-[12px] tracking-[0.14em] text-primary-foreground uppercase"
+          >
+            {isAuthenticated ? "Your ledger" : "Create a free account"}
+          </Link>
+        </nav>
+      )}
     </header>
   );
 }
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-rule px-4 py-10 md:px-8">
-      <div className="mx-auto flex max-w-[1240px] flex-col gap-6 md:flex-row md:items-start md:justify-between">
+    <footer className="mt-20 border-t border-rule px-4 py-10 md:mt-24 md:px-8">
+      <div className="mx-auto flex max-w-[1240px] flex-col gap-8 md:flex-row md:items-start md:justify-between">
         <div className="max-w-sm">
           <div className="font-serif text-lg">
             Career<span className="italic text-accent">Reality</span>
@@ -97,7 +136,7 @@ export function SiteFooter() {
             professionals. Editorial conclusions are not for sale.
           </p>
         </div>
-        <div className="flex gap-12">
+        <div className="flex flex-wrap gap-10 md:gap-12">
           <nav className="flex flex-col gap-2">
             <span className="label-xs">Tools</span>
             <Link to="/salary-explorer" className="text-[13px] hover:text-accent">
@@ -108,6 +147,18 @@ export function SiteFooter() {
             </Link>
             <Link to="/layoff-radar" className="text-[13px] hover:text-accent">
               Layoff radar
+            </Link>
+          </nav>
+          <nav className="flex flex-col gap-2">
+            <span className="label-xs">Newsroom</span>
+            <Link to="/analysis" className="text-[13px] hover:text-accent">
+              Analysis
+            </Link>
+            <Link to="/submit" className="text-[13px] hover:text-accent">
+              Write for us
+            </Link>
+            <Link to="/auth" className="text-[13px] hover:text-accent">
+              Member account
             </Link>
           </nav>
           <nav className="flex flex-col gap-2">
@@ -126,7 +177,5 @@ export function SiteFooter() {
 }
 
 export function SectionHeading({ children }: { children: React.ReactNode }) {
-  return (
-    <h2 className="label-xs border-b border-rule pb-2">{children}</h2>
-  );
+  return <h2 className="label-xs border-b border-rule pb-2">{children}</h2>;
 }
